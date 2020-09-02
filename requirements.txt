@@ -1,5 +1,6 @@
 -i https://pypi.org/simple
 django-cors-headers==3.5.0
+django-mdeditor==0.1.18
 django==2.2
 djangorestframework==3.11.1
 psycopg2-binary==2.8.5

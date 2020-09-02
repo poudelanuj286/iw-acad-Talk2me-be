@@ -210,4 +210,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 CORS_ORIGIN_ALLOW_ALL = True # any website has access to my api
-CORS_URLS_REGEX = r'^/api/.*$'
+# CORS_URLS_REGEX = r'^/api/.*$'
+
+CORS_ALLOWED_ORIGINS = [
+    # "https://example.com",
+    # "https://sub.example.com",
+    "http://localhost:3000",
+    # "http://127.0.0.1:9000"
+]
+
