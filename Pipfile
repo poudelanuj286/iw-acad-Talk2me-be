@@ -18,6 +18,10 @@ django-summernote = "*"
 pillow = "*"
 whitenoise = "*"
 dj-database-url = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
+requests = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
