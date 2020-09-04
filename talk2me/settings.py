@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     #third party
     'corsheaders',
     'rest_framework',
-    'mdeditor',
+    'ckeditor',
     # 'rest_framework.authtoken',
     'djoser',
     #internal
@@ -51,6 +51,11 @@ INSTALLED_APPS = [
     'accounts',
     
 ]
+# CKEDITOR_CONFIGS = {
+#     'awesome_ckeditor': {
+#         'toolbar': 'Basic',
+#     },
+# }
 
 INSTALLED_APPS += [
    # other installed apps
@@ -62,6 +67,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,7 +81,7 @@ ROOT_URLCONF = 'talk2me.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, "build")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -93,16 +99,23 @@ WSGI_APPLICATION = 'talk2me.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST')
-        }
+if DEBUG:
+    DATABASES = {
+            'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST')
+            }
+    }
+else:
+    DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -142,6 +155,10 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+DOMAIN = config('DOMAIN')
+SITE_NAME = config('SITE_NAME')
+DEFAULT_FROM_EMAIL = 'support <your-email@163.com>'
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
@@ -201,21 +218,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+        'width':1000,
+        'height': 100,
+
+    }
+}
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
-CORS_ORIGIN_ALLOW_ALL = True # any website has access to my api
-# CORS_URLS_REGEX = r'^/api/.*$'
+if DEBUG:
+    CORS_ORIGIN_ALLOW_ALL = True # any website has access to my api
+    # CORS_URLS_REGEX = r'^/api/.*$'
 
 CORS_ALLOWED_ORIGINS = [
-    # "https://example.com",
-    # "https://sub.example.com",
     "http://localhost:3000",
-    # "http://127.0.0.1:9000"
+    "http://" + config('REACT_APP_API_URL'),
+    "https://" + config('REACT_APP_API_URL'),
 ]
-

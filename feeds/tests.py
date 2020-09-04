@@ -9,8 +9,8 @@ User = get_user_model()
 
 class FeedTestCase(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='abc', password='somepassword')
-        self.userb = User.objects.create_user(username='xyz', password='somepassword2')
+        self.user = User.objects.create_user(name='abc',email= 'abc@gmail.com', password='somepassword')
+        self.userb = User.objects.create_user(name='xyz',email= 'xyz@gmail.com', password='somepassword2')
         Feed.objects.create(content="my first feed", 
             user=self.user)
         Feed.objects.create(content="my second feed", 
@@ -27,7 +27,7 @@ class FeedTestCase(TestCase):
     
     def get_client(self):
         client = APIClient()
-        client.login(username=self.user.username, password='somepassword')
+        client.login(name=self.user.name, email=self.user.email, password='somepassword')
         return client
     
     def test_feed_list(self):

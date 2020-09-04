@@ -6,8 +6,9 @@ from django.utils.http import is_safe_url
 
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+import requests
 
 from .forms import FeedForm
 from .models import Feed
@@ -28,6 +29,20 @@ def home_view(request, *args, **kwargs):
     if request.user.is_authenticated:
         username = request.user.username
     return render(request, "pages/home.html", context={"username": username}, status=200)
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def user_activation(request, uid, token):
+    """ 
+    Intermediate view to activate a user's email. 
+    """
+    protocol = 'https://' if request.is_secure() else 'http://'
+    web_url = protocol + request.get_host()
+    post_url = web_url + "/auth/users/activation/"
+    post_data = {"uid": uid, "token": token}
+    result = requests.post(post_url, data=post_data)
+    content = result.text
+    return Response(content)
 
 
 @api_view(['POST']) # http method the client == POST

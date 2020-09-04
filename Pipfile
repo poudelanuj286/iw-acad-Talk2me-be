@@ -12,6 +12,12 @@ django-cors-headers = "*"
 python-decouple = "*"
 psycopg2-binary = "*"
 django-mdeditor = "*"
+django-wysiwyg = "*"
+django-ckeditor = "*"
+django-summernote = "*"
+pillow = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.8"

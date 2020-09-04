@@ -1,7 +1,7 @@
 import random
 from django.db import models
 from django.conf import settings
-from mdeditor.fields import MDTextField
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 User = settings.AUTH_USER_MODEL
@@ -16,7 +16,7 @@ class Feed(models.Model):
     parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='feed_user', blank=True, through=FeedLike)
-    content = MDTextField()
+    content = RichTextField()
     image = models.FileField(upload_to='images/', blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     

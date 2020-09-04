@@ -37,9 +37,10 @@ class FeedCreateSerializer(serializers.ModelSerializer):
 class FeedSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField(read_only=True)
     parent = FeedCreateSerializer(read_only=True)
+    name = serializers.CharField(read_only=True, source="user.name")
     class Meta:
         model = Feed
-        fields = ['id', 'content', 'likes', 'is_share', "parent"]
+        fields = ['id', 'name', 'content', 'likes', 'is_share', "parent"]
 
     def get_likes(self, obj):
         return obj.likes.count()
