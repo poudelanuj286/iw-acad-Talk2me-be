@@ -11,7 +11,7 @@ const Home = (props) => {
     const [content, setContents] = useState("")
     useEffect(() => {
         async function getFeeds() {
-            const feeds = await Axios.get(`${process.env.REACT_APP_API_URL}/api/feeds`)
+            const feeds = await Axios.get(`/api/feeds`)
             setFeeds(feeds.data)
         }
         getFeeds()
@@ -37,7 +37,7 @@ const Home = (props) => {
         data.append('content', content)
         const me = JSON.parse(localStorage.getItem('me'))
         feeds.push({ id: me.id, content, name: me.name })
-        await Axios.post(`${process.env.REACT_APP_API_URL}/api/feeds/create/`, data, config)
+        await Axios.post(`/api/feeds/create/`, data, config)
 
     }
 

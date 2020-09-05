@@ -3,7 +3,7 @@ import {GET_FEED_DATA,FEED_FETCH_ERROR} from './types';
 
 export const getAllFeeds = () => async dispatch =>{
     try{
-        const feeds = await axios.get(`${process.env.REACT_APP_API_URL}/api/feeds`);
+        const feeds = await axios.get(`/api/feeds`);
         console.log("Here")
         console.log("Feeds",feeds)
         dispatch({
