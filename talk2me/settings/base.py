@@ -205,13 +205,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-
-if DEBUG:
-    CORS_ORIGIN_ALLOW_ALL = True # any website has access to my api
-    # CORS_URLS_REGEX = r'^/api/.*$'
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://" + config('REACT_APP_API_URL'),
-    "https://" + config('REACT_APP_API_URL'),
-]
