@@ -6,7 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "==2.2"
 djangorestframework = "*"
 django-cors-headers = "*"
 python-decouple = "*"
@@ -22,6 +21,7 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 requests = "*"
 gunicorn = "*"
+django = "*"
 
 [requires]
 python_version = "3.8"

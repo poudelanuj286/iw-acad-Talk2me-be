@@ -1,7 +1,9 @@
-from decouple import config
+from decouple import config, Csv
 import dj_database_url
-from .base import *
 
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
+DEBUG = config('DEBUG', cast=bool)
 
 DATABASES = {
     'default': dj_database_url.config(

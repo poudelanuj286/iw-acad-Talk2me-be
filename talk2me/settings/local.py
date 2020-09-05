@@ -1,22 +1,19 @@
-
 from decouple import config, Csv
-from .base import *
+import dj_database_url
 
-# DATABASES = {
-#         'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('DB_NAME', default='talk2me'),
-#         'USER': config('DB_USER', default='talk2me'),
-#         'PASSWORD': config('DB_PASSWORD', default='talk2me'),
-#         'HOST': config('DB_HOST', default='localhost')
-#         }
-# }
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
+DEBUG = config('DEBUG', cast=bool)
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://" + config('REACT_APP_API_URL'),
+#     "https://" + config('REACT_APP_API_URL'),
+# ]
 CORS_ORIGIN_ALLOW_ALL = True # any website has access to my api
